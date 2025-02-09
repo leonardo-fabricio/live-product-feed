@@ -1,10 +1,12 @@
 {
   "name": "live-product-feed",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint . --fix"
+    "lint": "npx eslint . --fix",
+    "dev" : "nodemon src/index.js",
+    "test": "node src/test.js",
+    "api": "nodemon src/api.js"
   },
   "keywords": [],
   "author": "leonardo-fabricio",

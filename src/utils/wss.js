@@ -1,7 +1,7 @@
 require("dotenv").config()
 const url = require("url")
 const socketPort = process.env.WEBSOCKET_PORT
-const tokenValid = process.env.TOKEN
+const tokenValid = process.env.WEBSOCKET_TOKEN
 
 function onListening () {
     console.log(`| \x1b[32msocket listening\x1b[0m\n| \x1b[33mws://localhost:${socketPort}\x1b[0m`)
