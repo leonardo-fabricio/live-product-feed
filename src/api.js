@@ -5,6 +5,7 @@ const {
   getProducts,
   createProduct,
 } = require("./utils/database");
+const { emitNewProduct, dataValidation } = require("./utils/api");
 
 const app = express();
 const API_PORT = process.env.API_PORT;
@@ -37,12 +38,14 @@ app.get("/products", (req, res) => {
 
 app.post("/events/product", (req, res) => {
   const { product_id } = req.body;
+  if(!dataValidation(product_id)) return res
+  .status(400)
+  .json({ status: "ERROR", message: "'product_id' is required" });
+
   const queryResponse = createProduct(product_id);
   if (queryResponse.status == "OK")
+    emitNewProduct({product_id})
     return res.status(201).json({ status: "OK", message: "Product created" });
-  return res
-    .status(400)
-    .json({ ...queryResponse, message: "Failure to create product" });
 });
 
 app.listen(API_PORT, () => {

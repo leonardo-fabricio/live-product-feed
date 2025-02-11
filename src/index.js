@@ -17,7 +17,13 @@ wss.on("connection", (ws, req) => {
   const data = { productId: 1, time: new Date() };
   ws.send(JSON.stringify(data));
 
-  ws.on("close", (msg) => {
+
+  ws.on("message", (msg) => {
+    const messageClient = msg.toString("utf8");
+    console.log(messageClient)
+  })
+
+  ws.on("close", () => {
     console.log(`| \x1b[31mconection closed - (client: ${uuid})\x1b[0m`);
   });
 });
