@@ -3,6 +3,7 @@ const { onListening, authenticate } = require("./utils/wss");
 const WebSocket = require("ws");
 
 const socketPort = process.env.WEBSOCKET_PORT;
+const EMIT_NEW_PRODUCT_TOKEN = process.env.EMIT_NEW_PRODUCT_TOKEN;
 const wss = new WebSocket.Server({ port: socketPort });
 
 wss.on("listening", onListening);
@@ -20,7 +21,13 @@ wss.on("connection", (ws, req) => {
 
   ws.on("message", (msg) => {
     const messageClient = msg.toString("utf8");
-    console.log(messageClient)
+    const data = JSON.parse(messageClient)  || undefined
+    if(data && data.event == "emit" && data.messageToken == EMIT_NEW_PRODUCT_TOKEN){
+      wss.clients.forEach(client => {
+        client.send(JSON.stringify(data.product))
+      })
+    }
+   
   })
 
   ws.on("close", () => {
