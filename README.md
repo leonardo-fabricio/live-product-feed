@@ -15,7 +15,7 @@ npm run dev
 Run API server
 
 ```Bash
-npm run test
+npm run api
 ```
 
 Try conection client
