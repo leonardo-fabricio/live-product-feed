@@ -9,13 +9,19 @@ npm i
 Run websocket server
 
 ```Bash
-npm run dev
+npm run socker
 ```
 
 Run API server
 
 ```Bash
 npm run api
+```
+
+Run the application NEXTJS with
+
+```Bash
+npm run consumer
 ```
 
 Try conection client
@@ -26,7 +32,7 @@ npm run test
 
 ## API Endpoints
 
-| Method | Route               | Description |
-|--------|--------------------|-------------|
-| `POST` | `/events/product`  | Receives new product notifications and emits a WebSocket event. |
-| `GET`  | `/products`        | Returns the list of products (for clients that need to fetch data). |
+| Method | Route               | Description | Params |
+|--------|--------------------|-------------| -------------|
+| `POST` | `/events/product`  | Receives new product notifications and emits a WebSocket event. | `product_id: NUMBER`|
+| `GET`  | `/products`        | Returns the list of products (for clients that need to fetch data). | `Nothing` |

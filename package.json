@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "npx eslint . --fix",
-    "dev" : "nodemon src/index.js",
+    "socket" : "nodemon src/index.js",
     "test": "node src/test.js",
     "api": "nodemon src/api.js",
     "consumer": "npm --prefix consumer run dev"
