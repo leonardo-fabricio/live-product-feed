@@ -6,7 +6,8 @@
     "lint": "npx eslint . --fix",
     "dev" : "nodemon src/index.js",
     "test": "node src/test.js",
-    "api": "nodemon src/api.js"
+    "api": "nodemon src/api.js",
+    "consumer": "npm --prefix consumer run dev"
   },
   "keywords": [],
   "author": "leonardo-fabricio",
