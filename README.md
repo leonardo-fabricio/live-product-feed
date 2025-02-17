@@ -9,7 +9,7 @@ npm i
 Run websocket server
 
 ```Bash
-npm run socker
+npm run socket
 ```
 
 Run API server
