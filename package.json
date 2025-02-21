@@ -9,7 +9,7 @@
     "api": "nodemon src/api.js",
     "consumer": "npm --prefix consumer run dev"
   },
-  "keywords": [],
+  "keywords": ["product feed", "websocket", "api express", "sqlite3"],
   "author": "leonardo-fabricio",
   "license": "ISC",
   "description": "App realtime to alert about new products in the feed",
@@ -25,5 +25,9 @@
     "eslint": "^9.19.0",
     "globals": "^15.14.0"
   },
-  "type": "commonjs"
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardo-fabricio/live-product-feed.git"
+  }
 }
