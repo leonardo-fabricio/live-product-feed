@@ -15,8 +15,7 @@ wss.on("connection", (ws, req) => {
   }
 
   console.log(`| \x1b[32mopen conection - (client: ${uuid})\x1b[0m`);
-  const data = { productId: 1, time: new Date() };
-  ws.send(JSON.stringify(data));
+  ws.send(JSON.stringify({uuid, product: "Nothing here"}));
 
 
   ws.on("message", (msg) => {
