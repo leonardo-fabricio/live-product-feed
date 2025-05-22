@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  socket:
+    build:
+      context: .
+    container_name: socket
+    ports:
+      - 8080:8080
+    environment:
+      - WEBSOCKET_PORT=8080
+      - WEBSOCKET_TOKEN=123456
+      - EMIT_NEW_PRODUCT_TOKEN=emitnewproduct
+      - API_PORT=7555
+      - API_TOKEN=12345
+    command: npm run socket
+    
+
+  api:
+    build:
+      context: .
+    container_name: api
+    ports:
+      - 7555:7555
+    environment:
+      - WEBSOCKET_PORT=8080
+      - WEBSOCKET_TOKEN=123456
+      - EMIT_NEW_PRODUCT_TOKEN=emitnewproduct
+      - API_PORT=7555
+      - API_TOKEN=12345
+    command: npm run api
+    

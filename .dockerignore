@@ -1,0 +1,8 @@
+consumer/
+README.md
+.dockerignore
+.gitignore
+Dockerfile
+node_modules
+docker-compose.yaml
+package-lock.json
