@@ -6,13 +6,13 @@ services:
       context: .
     container_name: socket
     ports:
-      - 8080:8080
+      - "8080:${WEBSOCKET_PORT}"
     environment:
       - WEBSOCKET_PORT=8080
-      - WEBSOCKET_TOKEN=123456
+      - WEBSOCKET_TOKEN=tokenseguro
       - EMIT_NEW_PRODUCT_TOKEN=emitnewproduct
       - API_PORT=7555
-      - API_TOKEN=12345
+      - API_TOKEN=tokenseguro
     command: npm run socket
     
 
@@ -21,12 +21,12 @@ services:
       context: .
     container_name: api
     ports:
-      - 7555:7555
+      - "7555:${API_PORT}"
     environment:
       - WEBSOCKET_PORT=8080
-      - WEBSOCKET_TOKEN=123456
+      - WEBSOCKET_TOKEN=tokenseguro
       - EMIT_NEW_PRODUCT_TOKEN=emitnewproduct
       - API_PORT=7555
-      - API_TOKEN=12345
+      - API_TOKEN=tokenseguro
     command: npm run api
     
