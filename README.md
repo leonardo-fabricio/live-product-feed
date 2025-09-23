@@ -1,44 +1,103 @@
 # Live Product Feed API
 
-Esta é uma API simples para distribuir dados de produtos em tempo real via WebSocket.
+This is a simple API for distributing product data in real-time via WebSocket.
 
----
+## Authentication
 
-## Autenticação
+All `POST` requests to the API require authentication. Include your API key in the `X-Api-Key` header.
 
-Todas as requisições POST para a API precisam de autenticação. Inclua a sua chave de API no cabeçalho `X-Api-Key`.
+**Example header:**
+```http
+X-Api-Key: your_secret_key_here
+```
 
-**Exemplo:**
-`X-Api-Key: sua_chave_secreta_aqui`
-
----
-
-## Endpoints da API
+## API Endpoints
 
 ### `POST /message`
 
-Envia um novo produto para todos os clientes conectados via WebSocket.
+Sends a new product to all connected WebSocket clients.
 
-**Header:**
-
+**Headers**
 - `Content-Type: application/json`
-- `X-Api-Key: [sua_chave]`
+- `X-Api-Key: [your_key]`
 
-**Corpo da Requisição:**
-
+**Request Body**
 ```json
 {
   "product": {
-    "name": "Nome do Produto",
-    "id": "Id do produto"
+    "name": "Product Name",
+    "id": "Product ID"
   }
 }
 ```
 
-**Respostas:**
+**Responses**
+- `200 OK`  
+  ```json
+  {"status": "Product sent successfully."}
+  ```
+- `400 Bad Request`  
+  ```json
+  {"error": "It is necessary to send the product data."}
+  ```
+- `401 Unauthorized`  
+  ```json
+  {"error": "API access key is invalid"}
+  ```
+- `500 Internal Server Error`  
+  ```json
+  {"error": "Internal server error while sending the product."}
+  ```
 
-200 OK: {"status": "Product sent successfully."}
+**Example with cURL**
+```bash
+curl -X POST http://localhost:[PORT]/message   -H "Content-Type: application/json"   -H "X-Api-Key: [your_key]"   -d '{"product": {"name": "Laptop", "id": 1}}'
+```
 
-400 Bad Request: {"error": "It is necessary to send the product data."}
+---
 
-401 Unauthorized: {"error": "API Key is missing."}
+### `GET /message`
+
+Retrieves the last product received by the API.
+
+**Headers**
+- `X-Api-Key: [your_key]`
+
+**Responses**
+- `200 OK` — Returns the last product object:
+  ```json
+  {
+    "id": "12345",
+    "name": "New Product"
+  }
+  ```
+- `401 Unauthorized` — If the API key is missing or invalid:
+  ```json
+  {"error": "API Key is missing."}
+  ```
+- `404 Not Found` — If no products have been received yet:
+  ```json
+  {"error": "No products have been received yet."}
+  ```
+
+---
+
+## WebSocket Connection
+
+Connect to the WebSocket server to receive real-time product updates.
+
+**Endpoint**
+```
+ws://localhost:[PORT]
+```
+
+**Received Data (JSON)**
+```json
+{
+  "type": "new_product",
+  "content": {
+    "name": "Product Name",
+    "id": 1
+  }
+}
+```
