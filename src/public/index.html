@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Product Feed API - Documentação</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #007bff;
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 10px;
+        margin-top: 25px;
+      }
+
+      h1 {
+        font-size: 2.5em;
+      }
+
+      h2 {
+        font-size: 2em;
+      }
+
+      h3 {
+        font-size: 1.5em;
+      }
+
+      p,
+      ul {
+        margin-bottom: 15px;
+      }
+
+      code,
+      pre {
+        background-color: #f1f3f5;
+        color: #c0392b;
+        padding: 2px 5px;
+        border-radius: 5px;
+      }
+
+      pre {
+        padding: 15px;
+        overflow-x: auto;
+        font-family: "Courier New", Courier, monospace;
+        line-height: 1.4;
+        border: 1px solid #dee2e6;
+      }
+
+      .header-code {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+
+      .example-code {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Live Product Feed API</h1>
+      <p>
+        This is a simple API for distributing product data in real-time via
+        WebSocket.
+      </p>
+
+      <h2>Authentication</h2>
+      <p>
+        All <code>POST</code> requests to the API require authentication.
+        Include your API key in the <code>X-Api-Key</code> header.
+      </p>
+      <div class="header-code">
+        <p><strong>Example:</strong></p>
+        <pre><code>X-Api-Key: your_secret_key_here</code></pre>
+      </div>
+
+      <h2>API Endpoints</h2>
+
+      <h3><code>POST /message</code></h3>
+      <p>Sends a new product to all connected WebSocket clients.</p>
+
+      <h4>Header:</h4>
+      <ul>
+        <li><code>Content-Type: application/json</code></li>
+        <li><code>X-Api-Key: [your_key]</code></li>
+      </ul>
+
+      <h4>Request Body:</h4>
+      <pre><code>{
+  "product": {
+    "name": "Product Name",
+    "id": "Product ID",
+  }
+}</code>
+</pre>
+
+      <h4>Responses:</h4>
+      <ul>
+        <li>
+          <code>200 OK</code>:
+          <code>{"status": "Product sent successfully."}</code>
+        </li>
+        <li>
+          <code>400 Bad Request</code>:
+          <code>{"error": "It is necessary to send the product data."}</code>
+        </li>
+        <li>
+          <code>401 Unauthorized</code>:
+          <code>{"error": "API access key is invalid"}</code>
+        </li>
+        <li>
+          <code>500 Internal Server Error</code>:
+          <code
+            >{"error": "Internal server error while sending the product."}</code
+          >
+        </li>
+      </ul>
+
+      <h4>Example with cURL:</h4>
+      <div class="example-code">
+        <pre><code>curl -X POST \
+  http://localhost:[PORT]/message \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: [your_key]" \
+  -d '{"product": {"name": "Laptop", "id": 1}}'</code></pre>
+      </div>
+
+      <h3><code>GET /message</code></h3>
+      <p>Retrieves the last product received by the API.</p>
+
+      <h4>Header:</h4>
+      <ul>
+        <li><code>X-Api-Key: [your_key]</code></li>
+      </ul>
+
+      <h4>Responses:</h4>
+      <ul>
+        <li>
+          <code>200 OK</code>: Returns the last product object.
+          <pre><code>{
+  "id": "12345",
+  "name": "New Product"
+}</code></pre>
+        </li>
+        <li>
+          <code>401 Unauthorized</code>: If the API key is missing or invalid.
+          <pre><code>{"error": "API Key is missing."}</code></pre>
+        </li>
+        <li>
+          <code>404 Not Found</code>: If no products have been received yet.
+          <pre><code>{"error": "No products have been received yet."}</code></pre>
+        </li>
+      </ul>
+
+      <h2>WebSocket Connection</h2>
+      <p>
+        Connect to the WebSocket server to receive real-time product updates.
+      </p>
+
+      <h4>Endpoint:</h4>
+      <pre><code>ws://localhost:[PORT]</code></pre>
+
+      <h4>Received Data (JSON):</h4>
+      <pre><code>{
+  "type": "new_product",
+  "content": {
+    "name": "Product Name",
+    "id": 1,
+  }
+}</code></pre>
+    </div>
+  </body>
+</html>

@@ -12,7 +12,7 @@ router.post(
   "/message",
   authenticateApiKey,
   validationMiddleware(productSchema),
-  handlePostMessage
+  handlePostMessage,
 );
 router.get("/message", authenticateApiKey, handleGetMessage);
 

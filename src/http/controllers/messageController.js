@@ -1,15 +1,21 @@
+const { broadcastMessage } = require("../../websocket/socket");
+
 const handlePostMessage = (req, res) => {
   const { product } = req.body;
 
   if (!product || Object.keys(product).length === 0) {
-    return res.status(400).json({ error: 'It is necessary to send the product data.' });
+    return res
+      .status(400)
+      .json({ error: "It is necessary to send the product data." });
   }
 
   try {
-    // broadcastProduct(product);
-    return res.status(200).json({ status: 'Product sent successfully.' });
+    broadcastMessage(product);
+    return res.status(200).json({ status: "Product sent successfully." });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal server error while sending the product.' });
+    return res
+      .status(500)
+      .json({ error: "Internal server error while sending the product." });
   }
 };
 
