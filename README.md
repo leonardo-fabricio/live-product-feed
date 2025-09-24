@@ -84,20 +84,38 @@ Retrieves the last product received by the API.
 
 ## WebSocket Connection
 
-Connect to the WebSocket server to receive real-time product updates.
+Connect to the WebSocket server to receive real-time product updates.  
+The API key must be passed as a query parameter named `token`.
 
 **Endpoint**
 ```
-ws://localhost:[PORT]
+ws://localhost:[PORT]?token=sua_chave_secreta
 ```
 
 **Received Data (JSON)**
+
+The server will broadcast a message with the `new_product` type and the product data in the `content` field.
+
 ```json
 {
   "type": "new_product",
   "content": {
-    "name": "Product Name",
-    "id": 1
+    "id": "12345",
+    "name": "Product Name"
   }
 }
+```
+
+**Example with React**
+```jsx
+useEffect(() => {
+  const serverUrl = "ws://localhost:[PORT]?token=[token]";
+  const ws = new WebSocket(serverUrl);
+  ws.onopen = () => {
+    console.log("Connected to WebSocket server.");
+  };
+  ws.onmessage = (event) => {
+    console.log("Message received:", event.data);
+  };
+}, []);
 ```
