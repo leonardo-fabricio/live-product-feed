@@ -1,6 +1,7 @@
 const {
   handlePostMessage,
   handleGetMessage,
+  handleGetClients,
 } = require("./controllers/messageController");
 const authenticateApiKey = require("../midlleware/authMiddleware");
 const validationMiddleware = require("../midlleware/validationMiddleware");
@@ -15,5 +16,6 @@ router.post(
   handlePostMessage,
 );
 router.get("/message", authenticateApiKey, handleGetMessage);
+router.get("/clients", authenticateApiKey, handleGetClients);
 
 module.exports = router;

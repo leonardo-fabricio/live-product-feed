@@ -95,7 +95,7 @@
 
     <h2>Authentication</h2>
     <p>
-      All <code>POST</code> requests to the API require authentication.
+      All methods requests to the API require authentication.
       Include your API key in the <code>X-Api-Key</code> header.
     </p>
     <div class="header-code">
@@ -187,6 +187,46 @@
         <pre><code>{"error": "No products have been received yet."}</code></pre>
       </li>
     </ul>
+    <h3><code>GET /clients</code></h3>
+    <p>Retrieves the number of clients connected to the socket.</p>
+
+    <h4>Header:</h4>
+    <ul>
+      <li><code>Content-Type: application/json</code></li>
+      <li><code>X-Api-Key: [your_key]</code></li>
+    </ul>
+
+    <h4>Responses:</h4>
+    <ul>
+      <li>
+        <code>200 OK</code>:
+        <pre><code>{
+    "clients": 0
+}</code></pre>
+      </li>
+      <li>
+        <code>401 Unauthorized</code>:
+        <pre>
+
+          <code>{"error": "API access key is invalid"}</code>
+        </pre>
+      </li>
+      <li>
+        <code>500 Internal Server Error</code>:
+        <pre>
+
+          <code>{"error": "Internal server error while fetching clients."}</code>
+        </pre>
+      </li>
+    </ul>
+
+    <h4>Example with cURL:</h4>
+    <div class="example-code">
+      <pre><code>curl -X GET \
+  http://localhost:[PORT]/clients \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: [your_key]" </code></pre>
+    </div>
 
     <h2>WebSocket Connection</h2>
     <p>
@@ -229,8 +269,6 @@
   </pre>
     </div>
   </div>
-
-
 </body>
 
 </html>

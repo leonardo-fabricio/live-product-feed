@@ -1,4 +1,4 @@
-const { broadcastMessage } = require("../../websocket/socket");
+const { broadcastMessage, clients } = require("../../websocket/socket");
 
 const handlePostMessage = (req, res) => {
   const { product } = req.body;
@@ -23,7 +23,18 @@ const handleGetMessage = (req, res) => {
   res.status(200).json({ message: [] });
 };
 
+const handleGetClients = (req, res) => {
+  try {
+    return res.status(200).json({ clients: clients.size });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Internal server error while fetching clients." });
+  }
+};
+
 module.exports = {
   handlePostMessage,
   handleGetMessage,
+  handleGetClients,
 };

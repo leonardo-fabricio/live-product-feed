@@ -54,4 +54,5 @@ const broadcastMessage = (message) => {
 module.exports = {
   initializeWebSocketServer,
   broadcastMessage,
+  clients,
 };
